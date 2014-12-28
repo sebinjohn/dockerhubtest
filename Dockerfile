@@ -1,12 +1,12 @@
-# A basic apache server. To use either add or bind mount content under /var/www
-FROM ubuntu:12.04
+FROM centos:centos6
+RUN yum -y update
+RUN yum -y install httpd
+RUN yum -y install createrepo
+RUN mkdir /var/www/html/repo_dir
+VOLUME ["/User/JohnS5/repo/cm]:/var/www/html/repo"]
 
-MAINTAINER Kimbro Staken version: 0.1
 
-RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-
-EXPOSE 80
+FROM centos:centos6
+RUN yum -y update
+RUN curl -o /etc/yum.repos.d/cloudera-manager.repo http://172.17.0.82/repo/cloudera-manager.repo
+RUN yum -y install cloudera-manager-server
