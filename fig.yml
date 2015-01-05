@@ -1,0 +1,18 @@
+cmserver:
+  image:  cm_server
+  links: 
+    - mysqltest:cmdb
+  ports:
+    - "7180:7180"
+
+cmagent:
+  image: cm_agent
+  links:
+    - cmserver:cmserver 
+
+mysqltest:
+  image: mysql:5.6
+  volumes:
+    - /home/zein/mysql_data_dir:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
